@@ -17,6 +17,18 @@ export class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const storedContacts = localStorage.getItem('contacts');
+
+    if (storedContacts) {
+      this.setState({ contacts: JSON.parse(storedContacts) });
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   addContact = contact => {
     const isContactExists = this.state.contacts.some(
       c => c.name.toLowerCase() === contact.name.toLowerCase()
